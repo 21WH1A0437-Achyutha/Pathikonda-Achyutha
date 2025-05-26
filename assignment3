@@ -1,0 +1,77 @@
+#question 1
+students = []
+def log_activity(func):
+    def wrapper(*args, **kwargs):
+        print("\n[LOG] Function is starting...")
+        result = func(*args, **kwargs)
+        print("[LOG] Function finished successfully.\n")
+        return result
+    return wrapper
+
+#question2
+@log_activity
+def add_student(name, roll_number, *marks, **other_info):
+    total = sum(marks)
+    average = total / len(marks) if marks else 0
+
+    student = {
+        "name": name,
+        "roll_number": roll_number,
+        "marks": list(marks),
+        "total": total,
+        "average": average
+    }
+
+    for key in other_info:
+        student[key] = other_info[key]
+
+    students.append(student)
+    print(f"Student '{name}' added.")
+
+# question3
+@log_activity
+def display_students():
+    if not students:
+        print("No student data found.")
+        return
+
+    print("\n  Student Records ")
+    for student in students:
+        print(f"Name      : {student['name']}")
+        print(f"Roll No.  : {student['roll_number']}")
+        print(f"Marks     : {student['marks']}")
+        print(f"Total     : {student['total']}")
+
+display_students()
+ 
+# question 4
+@log_activity
+def display_results():
+    if not students:
+        print("No student data available.")
+        return
+
+    print("\n  Student Result")
+    for student in students:
+        marks = student["Marks"]
+        total = sum(marks)
+        avg = total / len(marks) if marks else 0
+
+        if avg >= 90:
+            grade = "A"
+        elif avg >= 75:
+            grade = "B"
+        elif avg >= 60:
+            grade = "C"
+        elif avg >= 40:
+            grade = "D"
+        else:
+            grade = "F"
+
+        print(f"\nName: {student['Name']}")
+        print(f"Roll No: {student['Roll No']}")
+        print(f"Marks: {marks}")
+        print(f"Total: {total}, Average: {avg:.2f}, Grade: {grade}")
+
+        if student["Extra Info"]:
+            print(f"Extra Info: {student['Extra Info']}")
